@@ -1,0 +1,34 @@
+{
+    "resultStatus": true,
+    "errorMessage": "",
+    "errorCode": "",
+    "resultData": {
+        "schoolId": 1,
+        "schoolCode": "SZWGYXX",
+        "school": "深圳外国语学校",
+        "frontImage": "http://www.sfls.net.cn/static/resources/updata/8529db6b12f4cb71b2575f8026c746e4.jpg",
+        "province": "广东省",
+        "city": "深圳市",
+        "district": "南山区",
+        "score": 4.5,
+        "imageList": "http://www.sfls.net.cn/static/resources/updata/8529db6b12f4cb71b2575f8026c746e4.jpg;http://www.sfls.net.cn/static/resources/updata/b52ac3f1fbe51ab5dd28e3826baf79b4.jpg",
+        "level": "省级重点学校",
+        "history": "深圳外国语学校创办于1990年，是市教育局直属重点学校、广东省一级学校、广东省国家级示范校、全国文明单位、广东省文明单位，是教育部确立的全国依法治校示范校、全国现代教育技术实验学校、全国首批13所可保送20%高中毕业生上重点大学的外国语学校之一。",
+        "location": "学校坐落繁华的南山高新技术园区,拥有4个校区...学校本部（含；初中、高中）创办于1990年，从2000年起又相继创办了深外东海附属小学、深外龙岗分校、深外国际部。",
+        "teachQuality": "学校拥有一支师德高尚、结构合理、业务精良、富有献身精神和创新意识的优良师资队伍。其中，学校本部拥有特级教师5名，高级教师156名，中级教师167名，聘有外籍教师9人。自1990年建校以来，共有160多人次获国家级和省市级以上荣誉称号，自深圳市“名师工程”实施以来，有22人次当选深圳名师。",
+        "excellentTeachers": [
+            {
+                "teacher": "唐高贵",
+                "position": "校长",
+                "introduce": "1965年生，现任深圳市外国语学院党委副书记...",
+                "avatar": "http://www.sfls.net.cn/static/resources/updata/day_120625/201206250938439257.jpg"
+            },
+            {
+                "teacher": "汤佳宏",
+                "position": "校长",
+                "introduce": "1957年7月生，现任深圳外国语学校党委书记、校长。1991年8月至今在深圳外国语学校任教，历任学生处、教务处副主任、主任，副校长兼党总支副书记暨纪委书记，校长兼党委书记。",
+                "avatar": "http://www.sfls.net.cn/static/resources/updata/6d0740d25854185f822c94a0e7f4ad2b.jpg"
+            }
+        ]
+    }
+}

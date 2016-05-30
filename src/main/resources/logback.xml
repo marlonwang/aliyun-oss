@@ -15,7 +15,7 @@
 		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
 			<FileNamePattern>${LOG_HOME}/oss.%d{yyyy-MM-dd}.log
 			</FileNamePattern>
-			<MaxHistory>30</MaxHistory>
+			<MaxHistory>7</MaxHistory>
 		</rollingPolicy>
 	</appender>
 

@@ -3,7 +3,10 @@ package net.logvv.oss.rest;
 import com.aliyun.oss.OSSClient;
 import com.aliyun.oss.model.Callback;
 import com.aliyun.oss.model.PutObjectRequest;
+import net.logvv.oss.commom.GeneralResult;
+import net.logvv.oss.commom.utils.JsonFileUtils;
 import net.logvv.oss.commom.utils.JsonUtils;
+import net.logvv.oss.commom.utils.SystemUtils;
 import net.logvv.oss.service.OssService;
 
 import org.slf4j.Logger;
@@ -65,4 +68,34 @@ public class TestObjectRest {
     }
 
 
+    @RequestMapping(value = "/test/v1/debug-json", method = RequestMethod.GET)
+    public Object readjson()
+    {
+        // json file path
+        String filePath = System.getProperties().getProperty("user.dir")
+                +File.separator
+                +"debug-json"
+                +File.separator
+                +"debug-json.json";
+
+        LOGGER.info("target path:{}",filePath);
+
+        File file = new File(filePath);
+        if(null == file || !file.exists()){
+            System.out.print("No file exist.");
+
+            return "No file exist.";
+        }
+        //System.out.print(Thread.currentThread().getContextClassLoader().getResource(""));
+        //file:/E:/_93wei/svn/project/oss/target/classes/
+
+        LOGGER.info("method:{}",Thread.currentThread().getStackTrace()[1].getMethodName());
+
+//        System.out.println(Thread.currentThread().getStackTrace()[2].getMethodName());//invoke0
+//        System.out.println(Thread.currentThread().getStackTrace()[1].getMethodName());//readjson
+//        System.out.println(Thread.currentThread().getStackTrace()[0].getMethodName());//getStackTrace
+
+        return JsonFileUtils.readPathJson(filePath);
+
+    }
 }
