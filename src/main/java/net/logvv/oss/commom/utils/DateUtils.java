@@ -37,11 +37,11 @@ public final class DateUtils {
 	}
 
 	// 默认的时间格式为"yyyy/MM/dd HH:mm:ss"，若后续有其他需求，则可以另行添加
-	private static final String DEFAULT_DATE_FORMAT = "yyyy/MM/dd HH:mm:ss";
+	private static final String DEFAULT_DATE_FORMAT = "yyyy-MM-dd HH:mm:ss";
+
+	private static final String DATA_FORMAT = "yyyy-MM-dd";
 	
-	private static final String DATA_FORMAT = "yyyy/MM/dd";
-	
-	private static final String MONTH_FORMAT = "yyyy/MM";
+	private static final String MONTH_FORMAT = "yyyy-MM";
 	
 	// 默认的时间格式为"yyyy/MM/dd HH:mm:ss"，若后续有其他需求，则可以另行添加
 	private static DateTimeFormatter defaultFormatter = DateTimeFormat.forPattern(DEFAULT_DATE_FORMAT);
