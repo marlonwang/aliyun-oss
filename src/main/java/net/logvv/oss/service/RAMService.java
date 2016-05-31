@@ -9,6 +9,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import java.net.URLEncoder;
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * Author : wangwei
  * Created on 2016/05/30 23:46.
@@ -37,18 +41,23 @@ public class RAMService {
          */
         Object obj = null;
 
-        String sign = "";
-        String fullReqParam = ramAccessUrl + "Format=" + format +
-                "&Version=2015-05-01" +
-                "&SignatureMethod=HMAC-SHA1" +
-                "&SignatureVersion=1.0" +
-                "&SignatureNonce="+ RandomStringUtils.randomNumeric(8) +
-                "&Timestamp="+ DateUtils.date2Str(DateTime.now(),"yyyy-MM-ddTHH:mm:ssZ") +
-                "&AccessKeyId=" + "" +
-                " &Signature=" + sign;
-
+        String signature = "";
+        String accessKeyId = "";
 
         try {
+
+            Map<String,String> param = new HashMap<>();
+            param.put("Format", format);
+            param.put("Version","2015-05-01");
+            param.put("SignatureMethod","HMAC-SHA1");
+            param.put("SignatureVersion","1.0");
+            param.put("SignatureNonce",RandomStringUtils.randomNumeric(8));
+            param.put("Timestamp",DateUtils.date2Str(DateTime.now(),"yyyy-MM-ddTHH:mm:ssZ"));
+            param.put("AccessKeyId",accessKeyId);
+
+            String fullReqParam = ramAccessUrl + SignatureUtils.linkParam(param);
+
+
             obj = RestServiceUtils.doGet(fullReqParam, Object.class);
 
         } catch (Exception e) {
