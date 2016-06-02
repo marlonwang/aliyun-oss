@@ -1,7 +1,5 @@
 package net.logvv.oss.service;
 
-import org.apache.commons.codec.digest.DigestUtils;
-
 import java.net.URLEncoder;
 import java.util.*;
 
@@ -58,6 +56,33 @@ public class SignatureUtils {
             }
             else {
                 prestr += key + "=" + "\"" + value + "\"" + "&";
+            }
+        }
+        return prestr;
+    }
+
+    /**
+     * create linked str of params as key1=value&key2=value2
+     * @param params
+     * @return
+     */
+    public static String linkPlainParam(Map<String,String> params)
+    {
+        // sort key by alpha asc
+        List<String> keys = new ArrayList<String>(params.keySet());
+        Collections.sort(keys);
+
+        String prestr = "";
+        for(int i = 0;i<keys.size();i++)
+        {
+            String key = keys.get(i);
+            String value = params.get(key);
+            if(i == keys.size() - 1)
+            {
+                prestr += key + "=" + value;
+            }
+            else {
+                prestr += key + "=" + value + "&";
             }
         }
         return prestr;
