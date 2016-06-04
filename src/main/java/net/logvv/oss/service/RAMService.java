@@ -55,7 +55,7 @@ public class RAMService {
             param.put("Timestamp",DateUtils.date2Str(DateTime.now(),"yyyy-MM-ddTHH:mm:ssZ"));
             param.put("AccessKeyId",accessKeyId);
 
-            String fullReqParam = ramAccessUrl + SignatureUtils.linkParam(param);
+            String fullReqParam = ramAccessUrl + SignatureUtils.linkParam(param,true);
 
 
             obj = RestServiceUtils.doGet(fullReqParam, Object.class);
