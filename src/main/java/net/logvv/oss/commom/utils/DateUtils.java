@@ -375,4 +375,17 @@ public final class DateUtils {
 		return dt;
 	}
 	
+	
+	public static String parseISO8601()
+	{
+//		DateTimeFormatter fmt = ISODateTimeFormat.dateTime();  
+//		return fmt.print(new DateTime().toDateTime(DateTimeZone.UTC));
+		
+//		DateTime dt = new DateTime();
+//		DateTimeFormatter fmt = ISODateTimeFormat.dateTimeNoMillis();
+//		return fmt.print(dt);
+		
+		return date2Str(DateTime.now().plusHours(-8),"yyyy-MM-dd'T'HH:mm:ss'Z'");
+	}
+	
 }

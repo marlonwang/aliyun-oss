@@ -21,7 +21,7 @@ public class RAMRest {
     public Object applyRAMRequestId(@RequestParam(value = "format",required = false,defaultValue = "xml")String format)
     {
 
-        return "";
+        return ramService.applyRequestId(format);
     }
 
 }
