@@ -73,7 +73,7 @@ public class OssService {
          OSSClient ossClient = new OSSClient(endpoint, accessKeyId, accessKeySecret, conf);
          
          /* OSSClient with read-write access */
-         //OSSClient ossClient = new OSSClient(endpoint, ramAccessKeyId2, ramAccessKeySecret2);
+        // OSSClient ossClient = new OSSClient(endpoint, ramAccessKeyId2, ramAccessKeySecret2);
          
          return ossClient;
     }
@@ -214,7 +214,7 @@ public class OssService {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-        System.out.println("Object：" + objKey + "contet：" + objectContent);
+        System.out.println("Object：" + objKey + "contet:" + objectContent);
         
         ossClient.shutdown();
     }

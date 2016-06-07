@@ -1,5 +1,6 @@
 package net.logvv.oss.service;
 
+import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -8,6 +9,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.codec.digest.HmacUtils;
+import org.apache.naming.java.javaURLContextFactory;
 import org.springframework.util.Base64Utils;
 
 /**
@@ -160,19 +162,20 @@ public class SignatureService {
         return Base64Utils.encodeToString(signature);
     }
 
-    public static void main(String[] args)
+    public static void main(String[] args) throws UnsupportedEncodingException
     {
-        String input = "EqAFBZSFShLdSYAgHqV8tu8XCLk=";
-        System.out.println("input:"+input);
-        System.out.println("ouput:"+encodeIgnoreWave(input));
-
-        Map<String,String> map = new HashMap<>();
-        map.put("name","alex~vv*");
-        map.put("sex","man_");
-        map.put("call","010 123456");
-
-        System.out.println(linkParam(map,false));
-        System.out.println(linkPlainParam(map,true));
+//        String input = "EqAFBZSFShLdSYAgHqV8tu8XCLk=";
+//        System.out.println("input:"+input);
+//        System.out.println("ouput:"+encodeIgnoreWave(input));
+//
+//        Map<String,String> map = new HashMap<>();
+//        map.put("name","alex~vv*");
+//        map.put("sex","man_");
+//        map.put("call","010 123456");
+//
+//        System.out.println(linkParam(map,false));
+//        System.out.println(linkPlainParam(map,true));
+    	System.out.println(URLEncoder.encode("13 aa+bb=bb","UTF-8"));
 
     }
 }

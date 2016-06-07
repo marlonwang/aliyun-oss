@@ -53,7 +53,9 @@ public class OssServiceTest extends AbstractTestBase {
 
 	@Test
 	public void testStoreFile() {
-		String path = "E:\\_93wei\\svn\\project\\oss\\logs\\oss.log";
+		String path = //"E:\\_93wei\\svn\\project\\oss\\logs\\oss.log";
+		"D:\\QMDownload\\kele.gif";
+		
 		
 		OSSClient client = demo.initOSSClient();
 		demo.storeFile(client, path);
@@ -80,7 +82,7 @@ public class OssServiceTest extends AbstractTestBase {
 	public void testDeleteObjectInBucket() {
 		OSSClient client = demo.initOSSClient();
 		String bucket = "sz-1";
-		String key = "TM99Wt.log";
+		String key = "bN7SrS.gif";
 		demo.deleteObjectInBucket(client, bucket, key);
 	}
 

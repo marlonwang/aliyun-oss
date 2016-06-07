@@ -109,9 +109,9 @@ public class RAMService {
             
             System.out.println("request string:"+httpHead + httpTail);
             
-            //System.out.println(fullReqParam);
-
-            return fullReqParam;//RestServiceUtils.doGet(httpHead + httpTail,String.class);
+            //RestServiceUtils.doGet(httpHead + httpTail,CreateUserResponse.class);
+            
+            return httpHead + httpTail;
 
         } catch (Exception e) {
             LOGGER.info("request to aliyun error:{}",e);
