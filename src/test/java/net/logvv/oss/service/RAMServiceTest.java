@@ -14,8 +14,11 @@ public class RAMServiceTest extends AbstractTestBase {
 	
 	@Test
 	public void testApplyRequestId() {
-		System.out.println(ramService.applyRequestId("JSON"));
+		// 创建test_user
+		String userName = "test_user";
+		ramService.applyRequestId("JSON",userName);
 		
+		//ramService.createRamUser("test_user");
 	}
 	
 	@Test
@@ -25,7 +28,7 @@ public class RAMServiceTest extends AbstractTestBase {
 	
 	@Test
 	public void testCreateRamUser(){
-		ramService.createRamUser();
+		ramService.createRamUser("alex");
 	}
 	
 	@Test

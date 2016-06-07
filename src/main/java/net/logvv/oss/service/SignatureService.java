@@ -129,7 +129,7 @@ public class SignatureService {
      * @param linkedParam 传入未经过RFC2104编码的排序的参数串
      * @param accessKeySecret
      * @return
-     * @return String  返回类型 
+     * @return String base64编码后的结果
      * @author wangwei
      * @date 2016年6月6日 下午5:46:38 
      * @version  [1.0, 2016年6月6日]

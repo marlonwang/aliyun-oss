@@ -1,8 +1,12 @@
 package net.logvv.oss.commom.utils;
 
 import java.sql.Timestamp;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Locale;
+import java.util.SimpleTimeZone;
 
 import org.apache.commons.lang3.StringUtils;
 import org.joda.time.DateTime;
@@ -53,6 +57,10 @@ public final class DateUtils {
 	//private static final String DEFAULT_TIME_FORMAT = "HH:mm:ss";
 	
 	private static final String HOUR_MINUTE = "HH:mm";
+	
+	private final static String TIME_ZONE = "GMT";
+	private final static String FORMAT_ISO8601 = "yyyy-MM-dd'T'HH:mm:ss'Z'";
+	private final static String FORMAT_RFC2616 = "EEE, dd MMM yyyy HH:mm:ss zzz";
 	
 	/**
 	 * 
@@ -375,7 +383,46 @@ public final class DateUtils {
 		return dt;
 	}
 	
+    public static String getISO8601Time(Date date) {
+    	Date nowDate = date;
+    	if (null == date){
+    		nowDate = new Date();
+    	}
+        SimpleDateFormat df = new SimpleDateFormat(FORMAT_ISO8601);
+        df.setTimeZone(new SimpleTimeZone(0, TIME_ZONE));
+        
+        return df.format(nowDate);
+    }
+
+    public static String getRFC2616Date(Date date) {
+    	Date nowDate = date;
+    	if (null == date){
+    		nowDate = new Date();
+    	}
+        SimpleDateFormat df = new SimpleDateFormat(FORMAT_RFC2616, Locale.ENGLISH);
+        df.setTimeZone(new SimpleTimeZone(0, TIME_ZONE));
+        return df.format(nowDate);
+    }
+    
+    public static Date parseISO8601(String strDate) throws ParseException {
+    	if (null == strDate || "".equals(strDate)){
+    		return null;
+    	}
+    	SimpleDateFormat df = new SimpleDateFormat(FORMAT_ISO8601);
+    	df.setTimeZone(new SimpleTimeZone(0, TIME_ZONE));
+        return df.parse(strDate);  
+    }
+    
+    public static Date parseRFC2616(String strDate) throws ParseException {
+    	if (null == strDate || "".equals(strDate) || strDate.length() != FORMAT_RFC2616.length()){
+    		return null;
+    	}
+    	SimpleDateFormat df = new SimpleDateFormat(FORMAT_RFC2616, Locale.ENGLISH);
+    	df.setTimeZone(new SimpleTimeZone(0, TIME_ZONE));
+        return df.parse(strDate);  
+    }
 	
+    
 	public static String parseISO8601()
 	{
 //		DateTimeFormatter fmt = ISODateTimeFormat.dateTime();  
@@ -387,5 +434,4 @@ public final class DateUtils {
 		
 		return date2Str(DateTime.now().plusHours(-8),"yyyy-MM-dd'T'HH:mm:ss'Z'");
 	}
-	
 }

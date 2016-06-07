@@ -1,5 +1,6 @@
 package net.logvv.oss.service;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
@@ -60,7 +61,7 @@ public class RAMService {
      * @version  [1.0, 2016年6月6日]
      * @since  version 1.0
      */
-    public Object applyRequestId(String format)
+    public String applyRequestId(String format,String userName)
     {
         /**
          https://ram.aliyuncs.com/
@@ -73,7 +74,6 @@ public class RAMService {
          &AccessKeyId=key-test
          &Timestamp=2012-06-01T12:00:00Z
          */
-        Object obj = null;
 
         try {
 
@@ -83,13 +83,15 @@ public class RAMService {
             param.put("SignatureMethod","HMAC-SHA1");
             param.put("SignatureVersion","1.0");
             param.put("SignatureNonce",UUID.randomUUID().toString());
-            param.put("Timestamp",DateUtils.parseISO8601());
+            param.put("Timestamp",DateUtils.getISO8601Time(new Date()));
             param.put("AccessKeyId",ramAccessKeyId);
+            param.put("RegionId", aliyunRegion);
             // 以下参数创建ram 账户
             param.put("Action", "CreateUser");
-            param.put("UserName", "test_user");
+            param.put("UserName", userName);
 
-            String sign = SignatureService.generateSignature(SignatureService.linkPlainParam(param,false),ramAccessKeySecret);
+            String sign = SignatureService.generateSignature(SignatureService.linkPlainParam(param,true),ramAccessKeySecret);
+            // 注意 这里的时间戳中的 %需要被编码为%25
 
             // 查看签名后的字符串
             String encodeSign = SignatureService.encodeIgnoreWave(sign);
@@ -97,23 +99,26 @@ public class RAMService {
             System.out.println("After sign:" + encodeSign);
             param.put("Signature",encodeSign);
 
-            String fullReqParam = ramAccessUrl + SignatureService.linkPlainParam(param,false);
+            String fullReqParam = ramAccessUrl + SignatureService.linkPlainParam(param,false); 
+            // 这里时间戳的% 需要按照RFC3986规则 编码为%25
             
             // 请求的时间戳需要处理成 Timestamp=2015-08-18T03%3A15%3A45Z
             String httpHead = fullReqParam.substring(0, 8);
             String httpTail = fullReqParam.substring(8);
             httpTail = httpTail.replaceAll(":", "%3A");
             
-            		
             System.out.println("request string:"+httpHead + httpTail);
+            
+            //System.out.println(fullReqParam);
 
-            obj = RestServiceUtils.doGet(httpHead + httpTail, JSONObject.class);
-            return obj;
+            return fullReqParam;//RestServiceUtils.doGet(httpHead + httpTail,String.class);
 
         } catch (Exception e) {
             LOGGER.info("request to aliyun error:{}",e);
-            return obj.toString();
+            
+            return null;
         }
+        
     }
 
     public Object demoApplyRequestId()
@@ -202,7 +207,7 @@ public class RAMService {
      * @version  [1.0, 2016年6月7日]
      * @since  version 1.0
      */
-    public void createRamUser()
+    public void createRamUser(String userName)
     {
     	// 构建一个 Aliyun Client, 用于发起请求
         // 构建Aliyun Client时需要设置AccessKeyId和AccessKeySevcret
@@ -214,7 +219,7 @@ public class RAMService {
         final CreateUserRequest request = new CreateUserRequest();
 
         //设置参数 - UserName
-        request.setUserName("alex");
+        request.setUserName(userName);
 
         // 发起请求，并得到response
         try {

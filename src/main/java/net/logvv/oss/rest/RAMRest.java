@@ -1,6 +1,8 @@
 package net.logvv.oss.rest;
 
+import net.logvv.oss.commom.GeneralResult;
 import net.logvv.oss.service.RAMService;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -18,10 +20,13 @@ public class RAMRest {
     private RAMService ramService;
 
     @RequestMapping(value = "/v1/ram/requestid",method = RequestMethod.GET)
-    public Object applyRAMRequestId(@RequestParam(value = "format",required = false,defaultValue = "xml")String format)
+    public GeneralResult createRamUser(@RequestParam(value = "format",required = false,defaultValue = "JSON")String format,
+    		@RequestParam("userName")String userName)
     {
-
-        return ramService.applyRequestId(format);
+    	GeneralResult result = new GeneralResult();
+        ramService.applyRequestId(format,"chipwell");
+        
+        return result;
     }
 
 }
