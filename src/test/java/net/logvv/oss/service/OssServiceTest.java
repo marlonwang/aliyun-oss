@@ -30,9 +30,16 @@ public class OssServiceTest extends AbstractTestBase {
 	@Test
 	public void testViewBucket() {
 		OSSClient client = demo.initOSSClient();
-		String bucket = "sz-1";
+		String bucket = "sz-1";//"bucket-001"; //
 		
 		demo.viewBucket(bucket, client);
+	}
+	
+	@Test
+	public void testListBucket() {
+		OSSClient client = demo.initOSSClient();
+		
+		demo.listBuckets(client);
 	}
 
 	@Test
@@ -46,7 +53,7 @@ public class OssServiceTest extends AbstractTestBase {
 
 	@Test
 	public void testStoreFile() {
-		String path = "logback.xml";
+		String path = "E:\\_93wei\\svn\\project\\oss\\logs\\oss.log";
 		
 		OSSClient client = demo.initOSSClient();
 		demo.storeFile(client, path);
@@ -73,7 +80,7 @@ public class OssServiceTest extends AbstractTestBase {
 	public void testDeleteObjectInBucket() {
 		OSSClient client = demo.initOSSClient();
 		String bucket = "sz-1";
-		String key = "obj-001";
+		String key = "TM99Wt.log";
 		demo.deleteObjectInBucket(client, bucket, key);
 	}
 

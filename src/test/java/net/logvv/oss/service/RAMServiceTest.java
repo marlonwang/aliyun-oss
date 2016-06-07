@@ -2,6 +2,7 @@ package net.logvv.oss.service;
 
 import net.logvv.oss.AbstractTestBase;
 import net.logvv.oss.commom.utils.DateUtils;
+import net.logvv.oss.commom.utils.JsonUtils;
 
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +21,22 @@ public class RAMServiceTest extends AbstractTestBase {
 	@Test
 	public void testDemoApplyRequestId(){
 		System.out.println(ramService.demoApplyRequestId());
+	}
+	
+	@Test
+	public void testCreateRamUser(){
+		ramService.createRamUser();
+	}
+	
+	@Test
+	public void testGetRamUser(){
+		String name = "alex";
+		System.out.println(JsonUtils.obj2json(ramService.getRamUser(name)));
+	}
+	
+	@Test
+	public void testUpdateRamUser(){
+		ramService.updateRamUser();
 	}
 	
 	@Test

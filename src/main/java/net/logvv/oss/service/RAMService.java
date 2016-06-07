@@ -5,6 +5,7 @@ import java.util.Map;
 import java.util.UUID;
 
 import net.logvv.oss.commom.utils.DateUtils;
+import net.logvv.oss.commom.utils.JsonUtils;
 import net.logvv.oss.commom.utils.RestServiceUtils;
 import net.sf.json.JSONObject;
 
@@ -12,6 +13,18 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+
+import com.aliyuncs.DefaultAcsClient;
+import com.aliyuncs.exceptions.ClientException;
+import com.aliyuncs.profile.DefaultProfile;
+import com.aliyuncs.profile.IClientProfile;
+import com.aliyuncs.ram.model.v20150501.CreateUserRequest;
+import com.aliyuncs.ram.model.v20150501.CreateUserResponse;
+import com.aliyuncs.ram.model.v20150501.GetUserRequest;
+import com.aliyuncs.ram.model.v20150501.GetUserResponse;
+import com.aliyuncs.ram.model.v20150501.GetUserResponse.User;
+import com.aliyuncs.ram.model.v20150501.UpdateUserRequest;
+import com.aliyuncs.ram.model.v20150501.UpdateUserResponse;
 
 /**
  * Author : wangwei
@@ -31,6 +44,9 @@ public class RAMService {
     
     @Value("${ram.accessKeySecret_1}")
     private String ramAccessKeySecret;
+    
+    @Value("${aliyun.region}")
+    private String aliyunRegion;
 
     /**
      * applyRequestId
@@ -160,12 +176,113 @@ public class RAMService {
             System.out.println("request string:"+httpHead + httpTail);
 
             obj = RestServiceUtils.doGet(httpHead + httpTail, JSONObject.class);
-            return obj;
 
         } catch (Exception e) {
             LOGGER.info("request to aliyun error:{}",e);
-            return obj.toString();
+            e.printStackTrace();
         }
+		return obj;
+    }
+    
+    public DefaultAcsClient initRamConfig()
+    {
+        IClientProfile profile = DefaultProfile.getProfile(aliyunRegion,ramAccessKeyId,ramAccessKeySecret);
+        DefaultAcsClient client = new DefaultAcsClient(profile);
+        
+        return client;
+    }
+    
+    /**
+     * 
+     * createRamUser
+     * 调用ram sdk 创建ram<br/>
+     * @return void  返回类型 
+     * @author wangwei
+     * @date 2016年6月7日 上午11:07:35 
+     * @version  [1.0, 2016年6月7日]
+     * @since  version 1.0
+     */
+    public void createRamUser()
+    {
+    	// 构建一个 Aliyun Client, 用于发起请求
+        // 构建Aliyun Client时需要设置AccessKeyId和AccessKeySevcret
+        // RAM是Global Service, API入口位于华东 1 (杭州) , 这里Region填写"cn-hangzhou"
+        IClientProfile profile = DefaultProfile.getProfile(aliyunRegion,ramAccessKeyId,ramAccessKeySecret);
+        DefaultAcsClient client = new DefaultAcsClient(profile);
+
+        // 构造"CreateUser"请求
+        final CreateUserRequest request = new CreateUserRequest();
+
+        //设置参数 - UserName
+        request.setUserName("alex");
+
+        // 发起请求，并得到response
+        try {
+            final CreateUserResponse response = client.getAcsResponse(request);
+
+            System.out.println("UserName: " + response.getUser().getUserName());
+            System.out.println("CreateTime: " + response.getUser().getCreateDate());
+        } catch (ClientException e) {
+            System.out.println("Failed.");
+            System.out.println("Error code: " + e.getErrCode());
+            System.out.println("Error message: " + e.getErrMsg());
+        }
+    }
+    
+    /**
+     * getRamUser
+     * 查看ram用户信息 <br/>
+     * @return
+     * @return User  返回类型 
+     * @author wangwei
+     * @date 2016年6月7日 上午11:22:53 
+     * @version  [1.0, 2016年6月7日]
+     * @since  version 1.0
+     */
+    public User getRamUser(String userName)
+    {
+    	final GetUserRequest request = new GetUserRequest();
+    	// AttachPolicyToGroupRequest
+    	// AttachPolicyToUserRequest
+    	
+    	request.setUserName(userName);
+    	
+    	try {
+			final GetUserResponse response = initRamConfig().getAcsResponse(request);
+			
+			return response.getUser();
+			
+		} catch (Exception e) {
+			// TODO: handle exception
+			LOGGER.info("Failed to get ram user info, error:{}",e);
+			return null;
+		}
+    }
+    
+    public void updateRamUser()
+    {
+    	DefaultAcsClient client = initRamConfig();
+    	
+    	final UpdateUserRequest request = new UpdateUserRequest();
+    	
+    	request.setNewDisplayName("alex wang");
+    	request.setNewEmail("marlonwang@163.com");
+    	request.setNewMobilePhone("13714410115");
+    	request.setNewComments("字节渲染了我的夜,我沉浸在字节的黑");
+    	request.setUserName("alex");
+    	request.setNewUserName("alexwang");
+    	
+    	try {
+			final UpdateUserResponse response = client.getAcsResponse(request);
+			
+			System.out.println(JsonUtils.obj2json(response.getUser()));
+			
+		} catch (Exception e) {
+			// TODO: handle exception
+			LOGGER.info("Failed to get ram user info, error:{}",e);
+			e.printStackTrace();
+		}
+    	
     }
 
 }

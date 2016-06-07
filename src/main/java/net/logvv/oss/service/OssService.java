@@ -25,11 +25,20 @@ public class OssService {
 	@Value("${aliyun.oss.endpoint}")
     public String endpoint;
 	
-	@Value("${aliyun.oss.accessKeyId}")
+	//@Value("${aliyun.accessKeyId}")
+	//@Value("${aliyun.oss.accessKeyId}")
+	@Value("${ram.accessKeyId_1}")
 	public String accessKeyId;
 	
-	@Value("${aliyun.oss.accessKeySecret}")
+	//@Value("${aliyun.accessKeySecret}")
+	//@Value("${aliyun.oss.accessKeySecret}")
+	@Value("${ram.accessKeySecret_1}")
 	public String accessKeySecret;
+	
+	@Value("${ram.accessKeyId_2}")
+	private String ramAccessKeyId2;
+	@Value("${ram.accessKeySecret_2}")
+	private String ramAccessKeySecret2;
 
     @Value("${oss.bucketName}")
     public String bucketName;
@@ -60,9 +69,11 @@ public class OssService {
          conf.setMaxErrorRetry(3);
       	 conf.setSocketTimeout(2000);
 
-         // 生成OSSClient
-         OSSClient ossClient = new OSSClient(endpoint, accessKeyId, accessKeySecret,conf);
-         //OSSClient ossClient = new OSSClient(endpoint2, accessKeyId, accessKeySecret);
+         /* OSSClient with full access */
+         OSSClient ossClient = new OSSClient(endpoint, accessKeyId, accessKeySecret, conf);
+         
+         /* OSSClient with read-write access */
+         //OSSClient ossClient = new OSSClient(endpoint, ramAccessKeyId2, ramAccessKeySecret2);
          
          return ossClient;
     }
@@ -79,12 +90,13 @@ public class OssService {
      */
     public void createBucketIfNotExist(String bucket,OSSClient ossClient)
     {
-        if (ossClient.doesBucketExist(bucketName)) {
-            System.out.println("已经创建Bucket：" + bucketName);
+        if (ossClient.doesBucketExist(bucket)) {
+            System.out.println("已经创建Bucket:" + bucket);
         } else {
-            System.out.println("Bucket不存在，准备创建Bucket：" + bucketName + "。");
+            System.out.println("Bucket不存在，准备创建Bucket：" + bucket + "。");
             // 链接地址是：https://help.aliyun.com/document_detail/oss/sdk/java-sdk/manage_bucket.html?spm=5176.docoss/sdk/java-sdk/init
-            ossClient.createBucket(bucketName);
+            ossClient.createBucket(bucket);
+            
         }
         ossClient.shutdown();
     }
@@ -104,8 +116,16 @@ public class OssService {
     	if(ossClient.doesBucketExist(bucket))
     	{
     		System.out.println(JsonUtils.obj2json(ossClient.getBucketInfo(bucket)));
-    	}
+    	}else {
+			System.out.println(bucket + "not exist.");
+		}
     	ossClient.shutdown();
+    }
+    
+    public void listBuckets(OSSClient ossClient)
+    {
+    	System.out.println(JsonUtils.obj2json(ossClient.listBuckets()));
+    	
     }
     
     /**
@@ -130,7 +150,7 @@ public class OssService {
     {
         String fileKey = RandomStringUtils.randomAlphanumeric(6)+path.substring(path.lastIndexOf("."));
         ossClient.putObject(bucketName, fileKey, new File(path));
-        System.out.println("Object：" + fileKey + "存入OSS成功。");
+        System.out.println("Object:" + fileKey + "存入OSS成功。");
         
         ossClient.shutdown();
         
