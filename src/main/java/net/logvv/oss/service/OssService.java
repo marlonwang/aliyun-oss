@@ -7,7 +7,10 @@ import com.aliyun.oss.OSSException;
 import com.aliyun.oss.model.OSSObject;
 import com.aliyun.oss.model.OSSObjectSummary;
 import com.aliyun.oss.model.ObjectListing;
+import com.aliyun.oss.model.PutObjectResult;
+
 import net.logvv.oss.commom.utils.JsonUtils;
+
 import org.apache.commons.lang3.RandomStringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -155,6 +158,27 @@ public class OssService {
         ossClient.shutdown();
         
         return fileKey; 
+    }
+    
+    /**
+     * storeImage
+     * 上传图片后返回图片的etag <br/>
+     * @param filekey
+     * @param filepath
+     * @return
+     * @return String  返回类型 
+     * @author wangwei
+     * @date 2016年6月13日 下午6:10:10 
+     * @version  [1.0, 2016年6月13日]
+     * @since  version 1.0
+     */
+    public String storeImage(String filekey,String filepath)
+    {
+    	 OSSClient client = initOSSClient();
+    	 
+         PutObjectResult result = client.putObject(bucketName, filekey, new File(filepath));
+         
+         return result.getETag();
     }
     
     /**
