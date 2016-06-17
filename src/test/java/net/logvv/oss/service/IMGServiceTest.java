@@ -2,7 +2,6 @@ package net.logvv.oss.service;
 
 import static org.junit.Assert.assertTrue;
 import net.logvv.oss.AbstractTestBase;
-import net.logvv.oss.commom.exception.RestInvocationException;
 import net.logvv.oss.model.BaseImgInfo;
 
 import org.apache.commons.lang3.StringUtils;
@@ -29,12 +28,15 @@ public class IMGServiceTest extends AbstractTestBase {
 	public void testGetImgInfo(){
 		String key = "dBwcFr.jpg";
 		BaseImgInfo image;
-		try {
-			image = imgService.getImgInfo(key);
-			System.out.println("H:"+image.getHeight()+";W:"+image.getWidth()+";S:"+image.getSize());
-		} catch (RestInvocationException e) {
-			e.printStackTrace();
-		}
+		image = imgService.getImgInfo(key);
+		System.out.println("H:"+image.getHeight()+";W:"+image.getWidth()+";S:"+image.getSize());
+	}
+	
+	@Test
+	public void testRetScaleImage(){
+		String key = "dBwcFr.jpg";
+		int w = 300;int h = 300;
+		System.out.println(imgService.retScaleImage(key, w, h)); 
 	}
 
 }

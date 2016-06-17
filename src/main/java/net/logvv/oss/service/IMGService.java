@@ -52,10 +52,47 @@ public class IMGService {
 		return imgChannel + "/" +fkey;
 	}
 	
-	public BaseImgInfo getImgInfo(String key) throws RestInvocationException
+	/**
+	 * getImgInfo
+	 * 获取图片的基本信息<br/>
+	 * @param key
+	 * @return
+	 * @throws RestInvocationException
+	 * @return BaseImgInfo  返回类型 
+	 * @author wangwei
+	 * @date 2016年6月17日 下午11:32:44 
+	 * @version  [1.0, 2016年6月17日]
+	 * @since  version 1.0
+	 */
+	public BaseImgInfo getImgInfo(String key)
 	{
-		BaseImgInfo info = RestServiceUtils.doGet(imgChannel+"/"+key+"@info", BaseImgInfo.class);
+		BaseImgInfo info = null;
+		try {
+			info = RestServiceUtils.doGet(imgChannel+"/"+key+"@info", BaseImgInfo.class);
+		} catch (Exception e) {
+			// TODO: handle exception
+			return null;
+		}
+
 		return info;
+	}
+	
+	public String retScaleImage(String key,int width,int height)
+	{
+		BaseImgInfo info = getImgInfo(key);
+		String returl = "";
+		if(null == info)
+		{
+			return "image not find.";
+		}
+		if(width <= info.getWidth() && height <= info.getHeight())
+		{
+			returl = imgChannel+"/"+key+"@"+width+"w_"+height+"h";
+		}
+		else {
+			returl = imgChannel+"/"+key +"@"+(width>height ? width+"w" : height+"h");
+		}
+		return returl;
 	}
 	
 	/**
