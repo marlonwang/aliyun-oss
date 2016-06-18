@@ -76,7 +76,19 @@ public class IMGService {
 
 		return info;
 	}
-	
+	/**
+	 * retScaleImage
+	 * 获取缩放的图片<br/>
+	 * @param key
+	 * @param width
+	 * @param height
+	 * @return
+	 * @return String  返回类型 
+	 * @author wangwei
+	 * @date 2016年6月18日 下午11:47:49 
+	 * @version  [1.0, 2016年6月18日]
+	 * @since  version 1.0
+	 */
 	public String retScaleImage(String key,int width,int height)
 	{
 		BaseImgInfo info = getImgInfo(key);
