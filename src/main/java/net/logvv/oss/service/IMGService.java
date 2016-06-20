@@ -76,6 +76,7 @@ public class IMGService {
 
 		return info;
 	}
+	
 	/**
 	 * retScaleImage
 	 * 获取缩放的图片<br/>
@@ -105,6 +106,10 @@ public class IMGService {
 			returl = imgChannel+"/"+key +"@"+(width>height ? width+"w" : height+"h");
 		}
 		return returl;
+	}
+	public String getCiImage(String key,int radius,int origin)
+	{
+		return imgChannel+"/"+key +"@"+radius+"-"+origin+"ci";
 	}
 	
 	/**

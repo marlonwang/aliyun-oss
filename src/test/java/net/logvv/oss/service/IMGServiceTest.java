@@ -33,6 +33,14 @@ public class IMGServiceTest extends AbstractTestBase {
 	}
 	
 	@Test
+	public void testGetCiImage(){
+		String key = "dBwcFr.jpg";
+		int radius = 300;
+		int origin = 0;
+		System.out.println(imgService.getCiImage(key, radius, origin));
+	}
+	
+	@Test
 	public void testRetScaleImage(){
 		String key = "dBwcFr.jpg";
 		int w = 300;int h = 300;
