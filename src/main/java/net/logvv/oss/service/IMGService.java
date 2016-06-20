@@ -107,6 +107,20 @@ public class IMGService {
 		}
 		return returl;
 	}
+	
+	/**
+	 * getCiImage
+	 * 获取制定半径的内切圆 图片 origin=0 保持原图大小<br/>
+	 * @param key
+	 * @param radius
+	 * @param origin
+	 * @return
+	 * @return String  返回类型 
+	 * @author wangwei
+	 * @date 2016年6月21日 上午12:01:10 
+	 * @version  [1.0, 2016年6月21日]
+	 * @since  version 1.0
+	 */	
 	public String getCiImage(String key,int radius,int origin)
 	{
 		return imgChannel+"/"+key +"@"+radius+"-"+origin+"ci";
