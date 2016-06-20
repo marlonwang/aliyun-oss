@@ -7,15 +7,17 @@ package net.logvv.oss.commom.utils.encrypt;
  *
  */
 
-import org.apache.commons.lang3.StringUtils;
-import sun.misc.BASE64Decoder;
-import sun.misc.BASE64Encoder;
+import java.security.NoSuchAlgorithmException;
 
 import javax.crypto.KeyGenerator;
 import javax.crypto.Mac;
 import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
-import java.security.NoSuchAlgorithmException;
+
+import org.apache.commons.lang3.StringUtils;
+
+import sun.misc.BASE64Decoder;
+import sun.misc.BASE64Encoder;
 public class HMACUtils {
 
     /**

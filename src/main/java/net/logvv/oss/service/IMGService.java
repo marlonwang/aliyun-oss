@@ -1,5 +1,9 @@
 package net.logvv.oss.service;
 
+import net.logvv.oss.commom.exception.RestInvocationException;
+import net.logvv.oss.commom.utils.RestServiceUtils;
+import net.logvv.oss.model.BaseImgInfo;
+
 import org.apache.commons.lang3.RandomStringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -46,6 +50,12 @@ public class IMGService {
 		LOGGER.info("upload image to bucket sz-1, object key:{}, etag:{}",fkey,etag);
 		
 		return imgChannel + "/" +fkey;
+	}
+	
+	public BaseImgInfo getImgInfo(String key) throws RestInvocationException
+	{
+		BaseImgInfo info = RestServiceUtils.doGet(imgChannel+"/"+key+"@info", BaseImgInfo.class);
+		return info;
 	}
 	
 	/**
